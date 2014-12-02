@@ -41,6 +41,14 @@ static int maxFileSize = 200*1024;
     }];
 }
 
+- (void)initRoundViews:(NSArray *)array {
+    [array enumerateObjectsUsingBlock:^(UIImageView *view, NSUInteger idx, BOOL *stop) {
+        view.layer.cornerRadius = view.frame.size.height /2;
+        view.layer.masksToBounds = YES;
+        view.layer.borderWidth = 0;
+    }];
+}
+
 - (NSString *)dateFromNSDate:(NSDate *)date {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -108,6 +116,22 @@ static int maxFileSize = 200*1024;
     }
     
     return nil;
+}
+
+- (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell
+                                        tableView:(UITableView *)tableView {
+    sizingCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), 0.0f);
+    
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
+    
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    return size.height;
+}
+
+- (void)showAlertViewWithMessage:(NSString *)message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 @end

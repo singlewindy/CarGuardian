@@ -76,7 +76,7 @@
     
     [SVProgressHUD showWithStatus:@"上报中"];
     
-    [[PGService service] reportWithLatitude:self.latitude longtitude:self.longitude address:self.address photo:self.photo success:^{
+    [[PGService service] reportWithLatitude:self.latitude longtitude:self.longitude address:self.address  message:self.textView.text photo:self.photo success:^{
         [SVProgressHUD showSuccessWithStatus:@"上报成功！"];
         [self.navigationController popViewControllerAnimated:YES];
     } failed:^(NSString *error) {
@@ -153,8 +153,7 @@
 - (void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response
 {
     AMapPOI *currentPoi = [response.regeocode.pois firstObject];
-    self.address = currentPoi.name;
-    
+    self.address = [NSString stringWithFormat:@"%@ %@", currentPoi.address, currentPoi.name];
     self.labelCurrentAddr.text = self.address;
     [self.tableView reloadData];
     

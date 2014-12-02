@@ -19,14 +19,21 @@ NSString *API_LOGIN;
 NSString *API_LOGOUT;
 NSString *API_REGISTER;
 
-#pragma mark - 地图模块
+#pragma mark - 主模块
 
 NSString *API_SEND_ALERT;
+NSString *API_GET_ON;
+NSString *API_GET_OFF;
+
+#pragma mark - 警告模块
+
+NSString *API_GET_ALERT_LIST;
+NSString *API_GET_ALERT;
+NSString *API_GET_ALL_ALERTS;
 
 
 #pragma mark - 用户模块
 
-NSString *API_UPDATE_LOCATION;
 NSString *API_UPDATE_AVATAR;
 NSString *API_UPDATE_USER_INFO;
 

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PGMapViewController : UIViewController 
+
+@interface PGMapViewController : UIViewController
+
+@property (nonatomic) NSArray *data;
+@property (nonatomic) NSUInteger type;  // 0 -- 主页, 1 -- 警情地图
 
 @end

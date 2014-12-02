@@ -66,21 +66,14 @@
                 [alertView show];
                 
             } failed:^(NSString *error) {
-                [self showAlertViewWithMessage:error];
+                [[PGFunction function] showAlertViewWithMessage:error];
             }];
         } else {
-            [self showAlertViewWithMessage:@"密码不一致，请重新输入！"];
+            [[PGFunction function] showAlertViewWithMessage:@"密码不一致，请重新输入！"];
         }
     } else {
-        [self showAlertViewWithMessage:@"信息不完整，请重新输入！"];
+        [[PGFunction function] showAlertViewWithMessage:@"信息不完整，请重新输入！"];
     }
-}
-
-#pragma mark - Helper Functions
-
-- (void)showAlertViewWithMessage:(NSString *)message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
 }
 
 @end

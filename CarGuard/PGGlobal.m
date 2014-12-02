@@ -23,13 +23,19 @@ NSString *API_CHANGE_PASSWORD = @"api/changepassword/";
 #pragma mark - 地图模块
 
 NSString *API_SEND_ALERT = @"api/sendalert/";
+NSString *API_GET_ON = @"api/geton/";
+NSString *API_GET_OFF = @"api/getoff/";
 
+#pragma mark - 警告模块
+
+NSString *API_GET_ALERT_LIST = @"api/getalertlist/";
+NSString *API_GET_ALERT = @"api/getalert/";
+NSString *API_GET_ALL_ALERTS = @"api/getallalerts";
 
 #pragma mark - 用户模块
 
-NSString *API_UPDATE_LOCATION = @"api/user/updatelocation/";
-NSString *API_UPDATE_AVATAR = @"api/user/updateavatar/";
-NSString *API_UPDATE_USER_INFO = @"api/user/updateprofile/";
+NSString *API_UPDATE_AVATAR = @"api/updateavatar/";
+NSString *API_UPDATE_USER_INFO = @"api/updateuserinfo/";
 
 #pragma mark - Notifications
 

@@ -2,7 +2,7 @@
 //  User.m
 //  CarGuard
 //
-//  Created by Stan on 11/10/14.
+//  Created by Stan on 12/1/14.
 //  Copyright (c) 2014 PubGeek. All rights reserved.
 //
 
@@ -11,8 +11,15 @@
 
 @implementation User
 
-@dynamic username;
 @dynamic email;
+@dynamic isGetOff;
+@dynamic latitude;
+@dynamic longitude;
+@dynamic password;
 @dynamic uid;
+@dynamic username;
+@dynamic sex;
+@dynamic city;
+@dynamic avatar;
 
 @end

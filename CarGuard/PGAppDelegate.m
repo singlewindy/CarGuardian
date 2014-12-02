@@ -9,7 +9,14 @@
 #import "PGAppDelegate.h"
 #import "PGFunction.h"
 #import "PGGlobal.h"
+
+#import "PGMessageViewController.h"
+#import "PGMessageDetailViewController.h"
+
 #import <MAMapKit/MAMapKit.h>
+#import "APService.h"
+
+#import "User.h"
 
 #define Rgb2UIColor(r, g, b)  [UIColor colorWithRed:((r) / 255.0) green:((g) / 255.0) blue:((b) / 255.0) alpha:1.0]
 
@@ -23,16 +30,19 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     UIImage *navBarImage = [[PGFunction function] imageWithColor:Rgb2UIColor(56, 168, 124)];
+//    UIImage *navBarImage = [[PGFunction function] imageWithColor:Rgb2UIColor(204, 0, 1)];
     [[UINavigationBar appearance] setBackgroundImage:navBarImage forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"Model"];
-    self.service = [[PGService alloc] init];
-    
     [MAMapServices sharedServices].apiKey = AMAP_API_KEY;
+    
+    self.service = [[PGService alloc] init];
     
     _mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     _centerController = [_mainStoryboard instantiateViewControllerWithIdentifier:@"Map"];
+    
+    [self initPushServiceWithOptions:launchOptions];
     
     [self doLoginProcess];
     
@@ -61,6 +71,31 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    
+    // Required
+    [APService registerDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    // Required
+    [APService handleRemoteNotification:userInfo];
+    NSLog(@"%@", userInfo);
+    
+    if (self.service.token) {
+        if (application.applicationState == UIApplicationStateActive){
+            //应用程序在前台的时候，这里可以做响应的处理
+            
+        } else {
+            PGMessageDetailViewController *vc = [_mainStoryboard instantiateViewControllerWithIdentifier:@"MessageDetail"];
+            vc.aid = userInfo[@"aid"];
+            [(UINavigationController *)[(IIViewDeckController *)self.window.rootViewController centerController] pushViewController:vc animated:YES];
+        }
+    }
+    
+}
+
 #pragma mark - Helper Functions
 
 - (IIViewDeckController *)viewDeckController {
@@ -78,7 +113,6 @@
     return [_mainStoryboard instantiateViewControllerWithIdentifier:@"Login"];
 }
 
-
 - (void)doLoginProcess {
     
     //    BOOL launchedBefore = [[NSUserDefaults standardUserDefaults] boolForKey:@"LaunchedBefore"];
@@ -87,12 +121,48 @@
     //        self.window.rootViewController = self.introViewController;
     //        return;
     //    }
-        
-    if (self.service.token) {
-        self.window.rootViewController = self.viewDeckController;
-    } else {
-        self.window.rootViewController = self.loginViewController;
+    
+    User *user = [User MR_findFirst];
+    
+    self.window.rootViewController = user ? self.viewDeckController : self.loginViewController;
+    
+    if (user) {
+        [self.service loginWithUserName:user.username password:user.password success:^{
+            NSLog(@"Login Success!");
+        } failed:^(NSString *error) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"帐号异常，请重新登录！" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            
+            [alertView show];
+        }];
     }
+
+}
+
+- (void)initPushServiceWithOptions:(NSDictionary *)launchOptions {
+    // Required
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        [APService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                       UIUserNotificationTypeSound |
+                                                       UIUserNotificationTypeAlert)
+                                           categories:nil];
+    } else {
+        //categories 必须为nil
+        [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                       UIRemoteNotificationTypeSound |
+                                                       UIRemoteNotificationTypeAlert)
+                                           categories:nil];
+    }
+#else
+    //categories 必须为nil
+    [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                   UIRemoteNotificationTypeSound |
+                                                   UIRemoteNotificationTypeAlert)
+                                       categories:nil];
+#endif
+    // Required
+    [APService setupWithOption:launchOptions];
 }
 
 @end

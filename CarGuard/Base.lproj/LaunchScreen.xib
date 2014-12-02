@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6249" systemVersion="14B17" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6249" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6243"/>
     </dependencies>
@@ -16,10 +16,15 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="launch_icon" translatesAutoresizingMaskIntoConstraints="NO" id="OSu-bN-02c">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="BHc-0o-ieC">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="launch_icon" translatesAutoresizingMaskIntoConstraints="NO" id="OSu-bN-02c">
                     <rect key="frame" x="119" y="166" width="243" height="75"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="75" id="YBU-bB-w59"/>
+                        <constraint firstAttribute="height" constant="75" id="YBU-bB-w59">
+                            <variation key="widthClass=compact" constant="150"/>
+                        </constraint>
                         <constraint firstAttribute="width" constant="243" id="o79-DA-tYI"/>
                     </constraints>
                     <variation key="default">
@@ -28,7 +33,8 @@
                             <exclude reference="o79-DA-tYI"/>
                         </mask>
                     </variation>
-                    <variation key="widthClass=compact">
+                    <variation key="widthClass=compact" misplaced="YES">
+                        <rect key="frame" x="119" y="166" width="243" height="150"/>
                         <mask key="constraints">
                             <include reference="YBU-bB-w59"/>
                             <include reference="o79-DA-tYI"/>
@@ -36,32 +42,56 @@
                     </variation>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.18823529411764706" green="0.60392156862745094" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="OSu-bN-02c" secondAttribute="centerX" id="7RZ-HC-r8P"/>
+                <constraint firstAttribute="centerY" secondItem="OSu-bN-02c" secondAttribute="centerY" id="7bU-JP-pv0"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
                 <constraint firstItem="OSu-bN-02c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="166" id="Xsn-MM-sLP"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
+                <constraint firstAttribute="centerX" secondItem="OSu-bN-02c" secondAttribute="centerX" id="aGe-M8-hZs"/>
+                <constraint firstAttribute="trailing" secondItem="BHc-0o-ieC" secondAttribute="trailing" id="i7D-Jo-nYv"/>
+                <constraint firstItem="BHc-0o-ieC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="keT-Mg-dwa"/>
+                <constraint firstItem="BHc-0o-ieC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mhj-5o-TPj"/>
+                <constraint firstAttribute="bottom" secondItem="BHc-0o-ieC" secondAttribute="bottom" id="z2D-ub-tXj"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="BHc-0o-ieC"/>
+                </mask>
                 <mask key="constraints">
+                    <exclude reference="i7D-Jo-nYv"/>
+                    <exclude reference="keT-Mg-dwa"/>
+                    <exclude reference="mhj-5o-TPj"/>
+                    <exclude reference="z2D-ub-tXj"/>
                     <exclude reference="7RZ-HC-r8P"/>
+                    <exclude reference="7bU-JP-pv0"/>
                     <exclude reference="Xsn-MM-sLP"/>
+                    <exclude reference="aGe-M8-hZs"/>
                 </mask>
             </variation>
             <variation key="widthClass=compact">
+                <mask key="subviews">
+                    <include reference="BHc-0o-ieC"/>
+                </mask>
                 <mask key="constraints">
-                    <include reference="7RZ-HC-r8P"/>
-                    <include reference="Xsn-MM-sLP"/>
+                    <include reference="i7D-Jo-nYv"/>
+                    <include reference="keT-Mg-dwa"/>
+                    <include reference="mhj-5o-TPj"/>
+                    <include reference="z2D-ub-tXj"/>
+                    <exclude reference="7RZ-HC-r8P"/>
+                    <include reference="7bU-JP-pv0"/>
+                    <exclude reference="Xsn-MM-sLP"/>
+                    <include reference="aGe-M8-hZs"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>
     <resources>
-        <image name="launch_icon" width="487" height="151"/>
+        <image name="bg" width="2169" height="1627"/>
+        <image name="launch_icon" width="576" height="369"/>
     </resources>
 </document>
